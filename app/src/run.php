@@ -1,9 +1,9 @@
 <?php
 
-error_reporting(E_ALL);
-
-require_once '../sockets/vendor/autoload.php';
+require 'vendor/autoload.php';
 
 use RobertKomasara\Messenger\Server\SocketInstance;
 
-( new SocketInstance() );
+try { ( new SocketInstance() ); } catch (\Exception $e){
+    printf("Run SocketInstance problem: %s",$e->getMessage());
+}

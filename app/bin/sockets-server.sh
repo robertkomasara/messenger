@@ -2,4 +2,4 @@
 
 set -euo pipefail;
 
-/usr/bin/php /home/robert/projects/sockets/SocketInstance.php;
+/usr/bin/php app/src/run.php;
