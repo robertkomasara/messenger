@@ -1,0 +1,16 @@
+# /etc/systemd/system/sockets-server.service
+ 
+[Unit]
+Description=SocketsForksPGP
+
+[Service]
+User=robert
+WorkingDirectory=/usr/bin
+ExecStart= /bin/bash /usr/bin/sockets-server.sh
+SuccessExitStatus=143
+TimeoutStopSec=10
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
