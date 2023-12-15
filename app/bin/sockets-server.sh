@@ -2,4 +2,4 @@
 
 set -euo pipefail;
 
-/usr/bin/php app/src/run.php;
+/usr/bin/php /home/vagrant/src/app/src/run.php;

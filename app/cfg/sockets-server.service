@@ -4,7 +4,7 @@
 Description=SocketsForksPGP
 
 [Service]
-User=robert
+User=vagrant
 WorkingDirectory=/usr/bin
 ExecStart= /bin/bash /usr/bin/sockets-server.sh
 SuccessExitStatus=143

@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
+require '/home/vagrant/src/vendor/autoload.php';
 
 use RobertKomasara\Messenger\Server\SocketInstance;
 
