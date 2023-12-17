@@ -11,7 +11,6 @@ class SocketThread
 
     public function __construct(private \Socket $socket)
     { 
-        $this->initEncrypt(); 
         $this->encryption = new Encryption();
     }
 
@@ -21,7 +20,7 @@ class SocketThread
         $this->sendMessage("[Send it as base64 without break lines.]\n");
     }
 
-    private function initEncrypt(): void 
+    public function initEncrypt(): void 
     {
         $this->initMessage();
         printf("Child process started with pid=%d.\n", getmypid() );

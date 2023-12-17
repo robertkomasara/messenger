@@ -57,7 +57,11 @@ class SocketInstance
                     $pid = pcntl_fork();
         
                     if ( $pid < 0 ) throw new ThreadException("Could not create fork",500);
-                    elseif ( $pid ) continue; else new SocketThread($clientSocket);
+                    elseif ( $pid ) continue; 
+                    else {
+                        $thread = new SocketThread($clientSocket); 
+                        $thread->initEncrypt();
+                    }
 
                     while ( -1 !== $id = pcntl_waitpid(0,$status) ) 
                     {
