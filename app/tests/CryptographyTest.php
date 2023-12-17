@@ -8,27 +8,23 @@ use RobertKomasara\Messenger\Cryptography\Decryption;
 
 class CryptographyTest extends TestCase
 {
-    private string $decryptPassphrase;
-    private string $decryptFingerprint;
-    private string $encryptFingerprint;
-
-    public function setUp(): void
-    {
-        $this->decryptPassphrase = getenv('CryptographyTestKeyDecryptPassphrase');
-        $this->decryptFingerprint = getenv('CryptographyTestKeyDecryptFingerprint');
-        $this->encryptFingerprint = getenv('CryptographyTestKeyEncryptFingerprint');
-    }
-
     public function testEncryptDecrypt(): void
     {
-        $encryption = new Encryption($this->encryptFingerprint);
-        $encryptedText = $encryption->encryptText('test txt');
-        if ( is_string($encryptedText) ) printf("%s",$encryptedText);
-        $this->assertTrue((bool)$encryptedText);
+        $randomText = bin2hex(random_bytes(rand(10,20)));
 
-        $decryption = new Decryption($this->decryptPassphrase,$this->decryptFingerprint);
+        $encryption = new Encryption(
+            APP_INI['EncryptFingerprint']
+        );
+        $encryptedText = $encryption->encryptText($randomText);
+        if ( is_string($encryptedText) ) printf("\nEncryption:\n\n%s",$encryptedText);
+
+        $decryption = new Decryption(
+            APP_INI['DecryptPassphrase'],
+            APP_INI['DecryptFingerprint']
+        );
         $decryptedText = $decryption->decryptText($encryptedText);
-        if ( is_string($decryptedText) ) printf("%s",$decryptedText);
-        $this->assertTrue((bool)$decryptedText);
+        if ( is_string($decryptedText) ) printf("\nDecrription:\n\n%s",$decryptedText);
+
+        $this->assertSame($decryptedText,$randomText);
     }
 }

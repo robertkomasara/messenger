@@ -2,9 +2,7 @@
 
 namespace RobertKomasara\Messenger\Cryptography;
 
-// putenv("GNUPGHOME=/tmp");
-
-abstract class Abstraction
+abstract class CryptoBase
 {
     protected object $gnupg;
 

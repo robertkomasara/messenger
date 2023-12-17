@@ -7,9 +7,13 @@ use RobertKomasara\Messenger\Cryptography\Encryption;
 
 class SocketThread
 {
-    public function __construct( 
-        private \Socket $socket 
-    ){ $this->initEncrypt(); }
+    private Encryption $encryption;
+
+    public function __construct(private \Socket $socket)
+    { 
+        $this->initEncrypt(); 
+        $this->encryption = new Encryption();
+    }
 
     private function initMessage(): void
     {
@@ -19,19 +23,21 @@ class SocketThread
 
     private function initEncrypt(): void 
     {
-        $this->initMessage(); $encryption = new Encryption();
+        $this->initMessage();
         printf("Child process started with pid=%d.\n", getmypid() );
 
         do {
             if ( false !== $msg = $this->recvMessage() ){
                 if ( mb_strlen($msg) && false !== $msg = base64_decode($msg) ){
                     printf('Incoming gpg pubkey: %s',$msg);
-                    $imported = $encryption->importKey($msg);
+                    $imported = $this->encryption->importKey($msg);
                     if ( !is_array($imported) || !isset($imported['fingerprint']) ){
                         $this->initMessage();
                     } else {
-                        $this->sendMessage("[PGP key looks ok!]\n");
-                        $this->sendMessage("[".$imported['fingerprint']."]");
+                        $responseMsg = $this->encryption->encryptText(
+                            "[PGP key looks ok!]\n",$imported['fingerprint']
+                        );
+                        $this->sendMessage($responseMsg);
                     }
                 }
             }    

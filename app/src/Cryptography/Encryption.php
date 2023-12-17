@@ -2,24 +2,24 @@
 
 namespace RobertKomasara\Messenger\Cryptography;
 
-class Encryption extends Abstraction
+class Encryption extends CryptoBase
 {
-    public function __construct(
-        private string $fingerprint = ""
-    ){}
+    private object $pgp;
 
-    public function importKey(string $pgpKey): mixed
+    public function __construct()
     {
-        $gpg = new \gnupg();
-
-        return $gpg->import($pgpKey);
+        $this->pgp = $gpg = new \gnupg();
     }
 
-    public function encryptText(string $message): string
+    public function importKey(string $pgpKey): void
     {
-        $gpg = new \gnupg();
-        $gpg->addencryptkey($this->fingerprint);
-        $encrypted = $gpg->encrypt($message);
+        $this->pgp->import($pgpKey);
+    }
+
+    public function encryptText(string $fingerprint,string $message): string
+    {
+        $this->pgp->addencryptkey($fingerprint);
+        $encrypted = $this->pgp->encrypt($message);
 
         return $encrypted;
     }

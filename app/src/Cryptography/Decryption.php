@@ -2,7 +2,7 @@
 
 namespace RobertKomasara\Messenger\Cryptography;
 
-class Decryption extends Abstraction
+class Decryption extends CryptoBase
 {
     public function __construct(
         private string $passphrase = "",

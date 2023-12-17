@@ -10,6 +10,9 @@ class ServerInstanceTest extends TestCase
     public function testServerRun(): void
     {
         $obj = new SocketInstance();
-        $this->assertIsObject($obj);
+        $response = $obj->createSock()->bindAddress();
+        unset($obj);
+
+        $this->assertTrue($response);
     }
 }

@@ -15,20 +15,9 @@ class SocketInstance
         private string $port = '2210',
         private string $host = '0.0.0.0',
         private object $sock = new \stdClass()
-    ) 
-    {
-        try {
-            $this->createSock()->bindAddress()->startListen();                 
-        } catch (SocketException $se){
-            file_put_contents( 
-                '../../log/' . strtolower(str_replace('\\','-',trim(self::class))) . '-' . date('Y-m-d_H:i:s') . '.log' 
-                , 
-                $se->getMessage() 
-            );
-        } 
-    }
+    ) {}
 
-    private function createSock(): self
+    public function createSock(): self
     {
         if ( ($this->sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) === false ) {            
             throw new SocketException("socket_create() failed: reason:",socket_last_error());
@@ -37,20 +26,20 @@ class SocketInstance
         return $this;
     }
 
-    private function bindAddress(): self
+    public function bindAddress(): bool
     {
         if ( !socket_set_option($this->sock, SOL_SOCKET, SO_REUSEADDR, 1) ) {
             throw new SocketException('Unable to set option on socket: ',socket_last_error($this->sock));
         }
 
-        if ( socket_bind($this->sock, $this->host, $this->port) === false ) {
+        if ( false == $binded = socket_bind($this->sock, $this->host, $this->port)  ) {
             throw new SocketException("socket_bind() failed: reason:",socket_last_error($this->sock));
         }
 
-        return $this;
+        return $binded;
     }
 
-    private function startListen(): void
+    public function startListen(): void
     {
         if ( socket_listen($this->sock,self::MAX_CONNECTIONS) === false ) {
             throw new SocketException("socket_listen() failed: reason:",socket_last_error($this->sock));
@@ -87,7 +76,6 @@ class SocketInstance
     public function __destruct()
     {
         if ( $this->sock instanceof \Socket ){
-            socket_shutdown($this->sock,2);
             socket_close($this->sock);    
         } 
     }
