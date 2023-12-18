@@ -7,7 +7,9 @@ class Decryption extends CryptoBase
     public function __construct(
         private string $passphrase,
         private string $fingerprint,
-    ){}
+    ){  
+        parent::__construct(); 
+    }
 
     public function decryptText(string $message): string
     {

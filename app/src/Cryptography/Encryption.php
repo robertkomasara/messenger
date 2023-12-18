@@ -6,8 +6,10 @@ class Encryption extends CryptoBase
 {
     public function __construct(
         private string $fingerprint
-    ){}
-
+    ){  
+        parent::__construct(); 
+    }
+    
     public function importKey(string $pgpKey): void
     {
         $this->pgp->import($pgpKey);
@@ -16,7 +18,7 @@ class Encryption extends CryptoBase
     public function encryptText(string $message): string
     {
         $this->pgp->addencryptkey($this->fingerprint);
-        
+
         return  $this->pgp->encrypt($message);
     }
 }
