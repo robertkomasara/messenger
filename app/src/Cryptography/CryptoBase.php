@@ -4,24 +4,10 @@ namespace RobertKomasara\Messenger\Cryptography;
 
 abstract class CryptoBase
 {
-    protected object $gnupg;
+    protected \gnupg $pgp;
 
-    private function printKeyInfo(string $pattern): void
+    protected function gettKeyInfo(string $pattern): array
     {
-        $gpg = new \gnupg();
-        $info = $gpg -> keyinfo($pattern);
-        print_r($info);
-    }
-
-    private function importPubKey(string $filePath): string
-    {
-        $publicKey = file_get_contents($filePath);
-
-        $this->gnupg = new \gnupg();
-        $this->gnupg->seterrormode(\gnupg::ERROR_EXCEPTION);
-        $info = $this->gnupg->import($publicKey);
-        $this->gnupg->addencryptkey($info['fingerprint']);
-
-        return $info['fingerprint'];
+        return $this->pgp->keyinfo($pattern);
     }
 }
