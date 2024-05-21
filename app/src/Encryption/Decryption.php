@@ -1,13 +1,11 @@
 <?php 
 
-namespace RobertKomasara\Messenger\Cryptography;
+namespace App\Messenger\Encryption;
 
 class Decryption extends CryptoBase
 {
-    public function __construct(
-        private string $passphrase,
-        private string $fingerprint,
-    ){  
+    public function __construct(private string $passphrase, private string $fingerprint)
+    {  
         parent::__construct(); 
     }
 

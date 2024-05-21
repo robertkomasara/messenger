@@ -1,6 +1,6 @@
 <?php
 
-namespace RobertKomasara\Messenger\Exception;
+namespace App\Messenger\Exception;
 
 class ThreadException extends \Exception
 {

@@ -1,6 +1,6 @@
 <?php 
 
-namespace RobertKomasara\Messenger\Cryptography;
+namespace App\Messenger\Encryption;
 
 abstract class CryptoBase
 {
@@ -11,7 +11,12 @@ abstract class CryptoBase
         $this->pgp = new \gnupg;
     }
 
-    protected function gettKeyInfo(string $pattern): array
+    public function importKey(string $pgpKey): void
+    {
+        $this->pgp->import($pgpKey);
+    }
+
+    public function gettKeyInfo(string $pattern): array
     {
         return $this->pgp->keyinfo($pattern);
     }

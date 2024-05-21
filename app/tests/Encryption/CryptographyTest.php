@@ -1,10 +1,10 @@
 <?php 
 
-namespace RobertKomasara\Messenger\Tests;
+namespace App\Messenger\Tests\Encryption;
 
 use PHPUnit\Framework\TestCase;
-use RobertKomasara\Messenger\Cryptography\Encryption;
-use RobertKomasara\Messenger\Cryptography\Decryption;
+use App\Messenger\Encryption\Encryption;
+use App\Messenger\Encryption\Decryption;
 
 class CryptographyTest extends TestCase
 {

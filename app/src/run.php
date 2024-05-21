@@ -2,11 +2,11 @@
 
 require '/home/vagrant/src/vendor/autoload.php';
 
-use RobertKomasara\Messenger\Server\SocketInstance;
+use App\Messenger\Handler\SocketHandler;
 
 try { 
   
-  $srv = new SocketInstance();
+  $srv = new SocketHandler();
   $binded = $srv->createSock()->bindAddress();
   if ( $binded ) $srv->startListen();
 

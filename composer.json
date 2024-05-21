@@ -11,18 +11,18 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "RobertKomasara\\Messenger\\": "app/src/"
+            "App\\Messenger\\": "app/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "RobertKomasara\\Messenger\\Tests\\": "app/tests/"
+            "App\\Messenger\\Tests\\": "app/tests/"
         }
     },
     "authors": [
         {
             "name": "Robert Komasara",
-            "email": "robertkomasara@protonmail.com"
+            "email": "App@protonmail.com"
         }
     ]
 }

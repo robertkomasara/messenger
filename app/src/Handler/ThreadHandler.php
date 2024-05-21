@@ -1,11 +1,11 @@
 <?php
 
-namespace RobertKomasara\Messenger\Thread;
+namespace App\Messenger\Handler;
 
-use RobertKomasara\Messenger\Exception\SocketException;
-use RobertKomasara\Messenger\Cryptography\Encryption;
+use App\Messenger\Exception\SocketException;
+use App\Messenger\Encryption\Encryption;
 
-class SocketThread
+class ThreadHandler
 {
     private Encryption $encryption;
 

@@ -1,12 +1,11 @@
 <?php
 
-namespace RobertKomasara\Messenger\Server;
+namespace App\Messenger\Handler;
 
-use RobertKomasara\Messenger\Exception\SocketException;
-use RobertKomasara\Messenger\Exception\ThreadException;
-use RobertKomasara\Messenger\Thread\SocketThread;
+use App\Messenger\Exception\SocketException;
+use App\Messenger\Exception\ThreadException;
 
-class SocketInstance
+class SocketHandler
 {
     const MAX_CONNECTIONS = 10;
 
@@ -59,7 +58,7 @@ class SocketInstance
                     if ( $pid < 0 ) throw new ThreadException("Could not create fork",500);
                     elseif ( $pid ) continue; 
                     else {
-                        $thread = new SocketThread($clientSocket); 
+                        $thread = new ThreadHandler($clientSocket); 
                         $thread->initEncrypt();
                     }
 
