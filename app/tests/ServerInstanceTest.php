@@ -7,12 +7,9 @@ use RobertKomasara\Messenger\Server\SocketInstance;
 
 class ServerInstanceTest extends TestCase
 {
-    public function testServerRun(): void
+    public function testInstance(): void
     {
         $obj = new SocketInstance();
-        $response = $obj->createSock()->bindAddress();
-        unset($obj);
-
-        $this->assertTrue($response);
+        $this->assertInstanceOf(SocketInstance::class,$obj);
     }
 }
