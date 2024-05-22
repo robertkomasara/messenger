@@ -27,24 +27,4 @@ Vagrant.configure("2") do |config|
 
   end
 
-  config.vm.define "cache" do |subconfig|
-
-    subconfig.vm.hostname = 'msg.cache.local'
-    subconfig.vm.post_up_message = 'Messenger redis host'
-    subconfig.vm.network "private_network", ip: '192.168.56.102'
-    subconfig.vm.network "forwarded_port", guest: 6379, host: 7379
-
-    subconfig.vm.provision "shell", path: "vagrant/provisions/hosts/redis/install.sh", privileged: true
-    
-    subconfig.trigger.after :up do |trigger|
-      trigger.info = "Starting trigger after up..."
-      trigger.run_remote = { path: "vagrant/triggers/hosts/redis/after-up.sh", privileged: false }
-    end
-    subconfig.trigger.before :destroy, :halt do |trigger|
-      trigger.info = "Starting trigger before down..."
-      trigger.run_remote = { path: "vagrant/triggers/hosts/redis/before-down.sh", privileged: false }
-    end
-
-  end
-
 end

@@ -7,8 +7,7 @@ use App\Messenger\Handler\SocketHandler;
 try { 
   
   $srv = new SocketHandler();
-  $binded = $srv->createSock()->bindAddress();
-  if ( $binded ) $srv->startListen();
+  $srv->createSock()->bindAddress()->startListen();
 
 } catch (\Exception $e){
     printf("Run SocketInstance problem: %s",$e->getMessage());

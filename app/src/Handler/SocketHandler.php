@@ -4,9 +4,12 @@ namespace App\Messenger\Handler;
 
 use App\Messenger\Exception\SocketException;
 use App\Messenger\Exception\ThreadException;
+use App\Messenger\Trait\ObserverSubjectTrait;
 
-class SocketHandler
+class SocketHandler implements \SplSubject
 {
+    use ObserverSubjectTrait;
+
     const MAX_CONNECTIONS = 10;
 
     public function __construct
@@ -14,7 +17,9 @@ class SocketHandler
         private string $port = '2210',
         private string $host = '0.0.0.0',
         private object $sock = new \stdClass()
-    ) {}
+    ){
+        $this->observers = new \SplObjectStorage();
+    }
 
     public function createSock(): self
     {
@@ -25,7 +30,7 @@ class SocketHandler
         return $this;
     }
 
-    public function bindAddress(): bool
+    public function bindAddress(): self
     {
         if ( !socket_set_option($this->sock, SOL_SOCKET, SO_REUSEADDR, 1) ) {
             throw new SocketException('Unable to set option on socket: ',socket_last_error($this->sock));
@@ -35,7 +40,7 @@ class SocketHandler
             throw new SocketException("socket_bind() failed: reason:",socket_last_error($this->sock));
         }
 
-        return $binded;
+        return $this;
     }
 
     public function startListen(): void
@@ -50,6 +55,8 @@ class SocketHandler
                 
                 socket_getpeername($clientSocket,$ip);
                 printf("New connection from: %s\n",$ip);
+
+                $this->notify($this);
 
                 try {
 

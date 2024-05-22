@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Tests;
+namespace App\Messenger\Tests;
 
 use PHPUnit\Framework\TestCase;
 
 class AppTestCase extends TestCase
 {
-    protected array $apiCredentials = [];
+    protected array $appIni = [];
 
     public function setUp(): void
     {
-        $apiIniFilePath = __DIR__ . '/../app/cfg/application.ini';
+        $appIniFilePath = __DIR__ . '/../cfg/application.ini';
 
-        if ( file_exists( $apiIniFilePath ) ){
-            $this->apiCredentials = parse_ini_file($apiIniFilePath,true);
+        if ( file_exists( $appIniFilePath ) ){
+            $this->appIni = parse_ini_file($appIniFilePath,true);
         }
     }
 }
